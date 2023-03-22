@@ -1,4 +1,4 @@
-# Code and Analysis for the master's thesis "" by Mira Thakkar
+# Code and Analysis for the master's thesis "Bayesian Tests for Genotype Frequencies in Experimental Tetraploid Populations" by Mira Thakkar
 
 [![NSF-2132247](https://img.shields.io/badge/NSF-2132247-blue.svg)](https://nsf.gov/awardsearch/showAward?AWD_ID=2132247)
 
