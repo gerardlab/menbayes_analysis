@@ -6,7 +6,7 @@ To reproduce the results of the thesis:
 
 1. Install all of the required packages:
     ``` r
-    install.packages(c("tidyverse", "devtools", "hwep", "BiocManager"))
+    install.packages(c("tidyverse", "devtools", "hwep", "future", "updog"))
     devtools::install_github("gerardlab/menbayes")
     ```
     
