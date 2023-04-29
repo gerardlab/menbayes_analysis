@@ -39,7 +39,7 @@ rd <- c(10, 100) #read depths
 niter <- seq_len(100) #number of iterations per simulation scenario
 ploidy <- 4
 
-simdf_null <- expand_grid(p1 = p1, p2 = p2, alpha = alpha, xi = xi, n = n, rd = rd, niter = niter) |>
+simdf_null <- expand_grid(p1 = p1, p2 = p2, alpha = alpha, xi = xi, n = n, rd = rd, seed = niter) |>
   filter((p1 == 0 & p2 == 1) |
            (p1 == 0 & p2 == 2) |
            (p1 == 1 & p2 == 1) |
@@ -53,10 +53,18 @@ simdf_null$pm_xi <- NA_real_ #missing value indicator for the posterior mean of 
 simdf_null$chisq_stat <- NA_real_ #missing value indicator for chi-sq statistic of observed v. expected genotype counts
 simdf_null$chisq_pvalue <- NA_real_ #missing value indicator for chi-sq p-value of observed v. expected genotype counts
 
-outdf <- foreach(i = seq_len(nrow(simdf_null)),
-                 .combine = rbind,
-                 .export = c("simdf_null")) %dopar% {
+## Shuffle data frame to evenly distribute between workers ----
+set.seed(1)
+simdf_null <- simdf_null[sample(seq_len(nrow(simdf_null))), ]
+
+outdf <- foreach(
+  i = seq_len(nrow(simdf_null)),
+  .combine = rbind,
+  .export = c("simdf_null")
+  ) %dopar% {
+
   ## Simulate genotypes here
+  set.seed(simdf_null$seed[[i]])
   ogf <- offspring_gf(alpha = simdf_null$alpha[i], xi = simdf_null$xi[i], p1 = simdf_null$p1[i], p2 = simdf_null$p2[i])
   ogc <- offspring_geno(x = ogf, n = simdf_null$n[i])
   genovec <- gcount_to_gvec(gcount = ogc)
@@ -95,10 +103,10 @@ outdf <- foreach(i = seq_len(nrow(simdf_null)),
   simdf_null$chisq_pvalue[i] <- chi[[2]]
 
   ## Assign the i-th value of pm_xi to be the posterior mean of xi
-  simdf_null$pm_xi[i] <- mean(marg_null[[2]][[2]])
+  simdf_null$pm_xi[i] <- mean(marg_null[[2]]$xi)
 
   ## Assign the i-th value of pm_alpha to be the posterior mean of alpha
-  simdf_null$pm_alpha[i] <- mean(marg_null[[2]][[1]])
+  simdf_null$pm_alpha[i] <- mean(marg_null[[2]]$alpha)
 
   simdf_null[i, ]
 }
