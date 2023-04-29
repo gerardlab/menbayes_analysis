@@ -14,6 +14,8 @@ simdf <- expand_grid(n, genofreq, niter)
 simdf$logbf <- NA_real_ #missing value indicator for log Bayes Factor
 
 for (i in seq_len(nrow(simdf))) {
+  cat("Iteration:", i, "\n")
+
   ## Simulate genotypes here
   ogc <- c(stats::rmultinom(n = 1, size = simdf$n[[i]], prob = simdf$genofreq[[i]]))
 

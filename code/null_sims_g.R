@@ -22,6 +22,7 @@ simdf_null$chisq_stat <- NA_real_ #missing value indicator for chi-sq statistic 
 simdf_null$chisq_pvalue <- NA_real_ #missing value indicator for chi-sq p-value of observed v. expected genotype counts
 
 for (i in seq_len(nrow(simdf_null))) {
+  cat("Iteration:", i, "\n")
   ## Simulate genotypes here
   ogf <- offspring_gf(alpha = simdf_null$alpha[i], xi = simdf_null$xi[i], p1 = simdf_null$p1[i], p2 = simdf_null$p2[i])
   ogc <- offspring_geno(x = ogf, n = simdf_null$n[i])
