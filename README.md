@@ -6,7 +6,7 @@ To reproduce the results of the thesis:
 
 1. Install all of the required packages:
     ``` r
-    install.packages(c("tidyverse", "devtools", "hwep", "future", "updog", "doRNG", "doFuture", "foreach", "rgntools"))
+    install.packages(c("tidyverse", "devtools", "hwep", "future", "updog", "doRNG", "doFuture", "foreach", "rgntools", "MASS", "ggthemes"))
     devtools::install_github("gerardlab/menbayes")
     ```
     
