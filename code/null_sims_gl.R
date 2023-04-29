@@ -108,4 +108,4 @@ if (nc > 1) {
   plan(sequential)
 }
 
-write.csv(outdf, "../output/sims/null_sims_gl_425.csv")
+write.csv(outdf, "./output/sims/null_sims_gl.csv")

@@ -18,8 +18,12 @@ for (i in seq_len(nrow(simdf))) {
   ogc <- c(stats::rmultinom(n = 1, size = simdf$n[[i]], prob = simdf$genofreq[[i]]))
 
   ## Fit Bayes test here
-  marg_null <- marg_f1_dr_pp_g4(x = ogc, g1 = 2, g2 = 2, chains = 1)
-  marg_alt <- hwep:::ddirmult(x = ogc, alpha = rep(1, 5), lg = TRUE)
+  trash <- capture.output(
+    marg_null <- marg_f1_dr_pp_g4(x = ogc, g1 = 2, g2 = 2, chains = 1)
+  )
+  trash <- capture.output(
+    marg_alt <- hwep:::ddirmult(x = ogc, alpha = rep(1, 5), lg = TRUE)
+  )
 
   log_bf <- marg_null - marg_alt
 
@@ -27,18 +31,5 @@ for (i in seq_len(nrow(simdf))) {
   simdf$logbf[i] <- log_bf
 }
 
-  ## write to csv
-  saveRDS(simdf, "~/thesis/mira_proj/output/simdf_alt.RDS")
-
-  ## looking at the bayes factors
-
-simdf %>%
-  mutate(xi = as.factor(xi),
-         n = as.factor(n),
-         alpha = as.factor(alpha)) %>%
-  ggplot(mapping = aes(x = n, y = logbf, color = xi)) +
-    geom_boxplot() +
-    facet_grid(rows = vars(p1, p2), cols = vars(alpha)) +
-    xlab("Sample Size") +
-    ylab("Log Bayes Factor")
-
+## write to rDS
+saveRDS(simdf, "./output/sims/alt_sims_g.RDS")

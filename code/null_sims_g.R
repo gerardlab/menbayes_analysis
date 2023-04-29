@@ -27,7 +27,9 @@ for (i in seq_len(nrow(simdf_null))) {
   ogc <- offspring_geno(x = ogf, n = simdf_null$n[i])
 
   ## Assign full output from null model to an object
-  marg <- marg_f1_dr_pp_g4(x = ogc, g1 = simdf_null$p1[i], g2 = simdf_null$p2[i], output = "all", chains = 1)
+  trash <- capture.output(
+    marg <- marg_f1_dr_pp_g4(x = ogc, g1 = simdf_null$p1[i], g2 = simdf_null$p2[i], output = "all", chains = 1)
+  )
 
   ## Fit Bayes test here
   marg_null <- marg[[1]]
@@ -39,7 +41,9 @@ for (i in seq_len(nrow(simdf_null))) {
   simdf_null$logbf[i] <- log_bf
 
   ## Fit Chi Square test here
-  chi <- chisq_g4(y = ogc, l1 = simdf_null$p1[i], l2 = simdf_null$p2[i])
+  suppressWarnings(
+    chi <- chisq_g4(y = ogc, l1 = simdf_null$p1[i], l2 = simdf_null$p2[i])
+  )
 
   ## Assign the i-th value of chisq_stat to be the chi-sq statistic
   simdf_null$chisq_stat[i] <- chi[[1]]
@@ -56,5 +60,5 @@ for (i in seq_len(nrow(simdf_null))) {
 
 
 # Write to CSV
-#write.csv(simdf_null, "~/thesis/mira_proj/output/simdf_null_g_04XX.csv")
+write_csv(simdf_null, "./output/sims/null_sims_g.csv")
 
