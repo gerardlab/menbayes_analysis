@@ -7,7 +7,8 @@ sdf %>%
   mutate(n = as.factor(n),
          `Parent Genotypes` = paste0("(", p1, ",", p2, ")"),
          alpha = paste0("alpha==", as.character(MASS::fractions(alpha))),
-         xi = paste0("xi==", as.character(MASS::fractions(xi)))) %>%
+         xi = paste0("xi==", as.character(MASS::fractions(xi))),
+         xi = parse_factor(xi)) %>%
   ggplot(aes(x = n, y = logbf, color = `Parent Genotypes`)) +
   facet_grid(alpha ~ xi, labeller = label_parsed) +
   geom_boxplot() +
