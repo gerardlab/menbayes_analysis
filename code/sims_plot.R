@@ -17,3 +17,16 @@ sdf %>%
   scale_color_colorblind() +
   xlab("Sample Size") +
   ylab("Log Bayes Factor")
+
+sdf <- readRDS("./output/sims/alt_sims_g.RDS")
+sdf %>%
+  mutate(gf = map_chr(genofreq, ~paste0("(", paste(., collapse = ", "), ")")),
+         n = as.factor(n)) %>%
+  ggplot(aes(x = n, y = logbf)) +
+  facet_wrap(~gf, scales = "free") +
+  geom_boxplot() +
+  theme_bw() +
+  theme(strip.background = element_rect(fill = "white")) +
+  xlab("Sample Size") +
+  ylab("Log Bayes Factor") +
+  geom_hline(yintercept = 0, lty = 2)
