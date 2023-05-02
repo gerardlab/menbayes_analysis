@@ -33,12 +33,12 @@ sims : $(simsout)
 	mkdir -p ./output/sims
 	$(rexec) '--args nc=$(nc)' $< ./output/rout/$(basename $(notdir $<)).Rout
 
-./output/sims/alt_sims_g.csv : ./code/alt_sims_g.RDS
+./output/sims/alt_sims_g.RDS : ./code/alt_sims_g.R
 	mkdir -p ./output/rout
 	mkdir -p ./output/sims
 	$(rexec) $< ./output/rout/$(basename $(notdir $<)).Rout
 
-./output/sims/alt_sims_gl.csv : ./code/alt_sims_gl.RDS
+./output/sims/alt_sims_gl.RDS : ./code/alt_sims_gl.R
 	mkdir -p ./output/rout
 	mkdir -p ./output/sims
 	$(rexec) $< ./output/rout/$(basename $(notdir $<)).Rout
