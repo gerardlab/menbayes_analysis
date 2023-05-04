@@ -16,7 +16,9 @@ sumdf %>%
   summarize(alpha = unique(alpha)) ->
   hlinedf
 
+## Only include scenarios where identified
 sumdf %>%
+  filter(p1 != 2, p2 != 2) %>%
   ggplot(aes(x = n, y = pm_alpha, color = `Parent Genotypes`)) +
   facet_grid(alpha_text ~ xi_text, labeller = label_parsed) +
   geom_boxplot() +
@@ -27,13 +29,14 @@ sumdf %>%
   ylab(TeX("Posterior Mean of $\\alpha$")) +
   geom_hline(data = hlinedf, mapping = aes(yintercept = alpha), lty = 2)
 
+## Having other parent be 1 still doesn't seem to help
 sumdf %>%
   group_by(xi_text, alpha_text, xi) %>%
   summarize(xi = unique(xi)) ->
   hlinedf
 
 sumdf %>%
-  filter(p1 == 2 | p2 == 2) %>%
+  filter((p1 == 1 & p2 == 2)) %>%
   ggplot(aes(x = n, y = pm_xi, color = `Parent Genotypes`)) +
   facet_grid(alpha_text ~ xi_text, labeller = label_parsed) +
   geom_boxplot() +
