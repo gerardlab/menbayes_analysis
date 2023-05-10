@@ -1,0 +1,225 @@
+---
+title: "Simulations"
+output: html_document
+date: "2023-04-26"
+---
+
+**Libraries**
+```{r}
+#library(menbayes)
+library(tidyverse)
+library(plotly)
+```
+
+Load Data
+```{r}
+alt_g <- readRDS("../output/sims/alt_sims_g.RDS")
+
+alt_gl <- readRDS("../output/sims/alt_sims_gl.RDS")
+
+null_g <- read.csv("../output/sims/null_sims_g.csv")
+
+null_gl <- read.csv("../output/sims/null_sims_gl.csv")
+```
+
+**Alternative Simulations**
+
+In this section, we run simulations under the alternative of segregation distortion to evaluate the relative strength of evidence for the hypotheses listed in Section 2.4. We simulated $n \in {10, 100, 1000}$ individuals under the genotype frequency distributions $q = (\frac{1}{5}, \frac{1}{5}, \frac{1}{5}, \frac{1}{5}, \frac{1}{5})$ and $q = (\frac{2}{5}, \frac{1}{5}, \frac{0}{5}, \frac{1}{5}, \frac{2}{5})$. We repeated simulations of individuals under all combinations of $n$ and $q$ 100 times. Additionally, we simulated genotype likelihoods using the model of (Gerard et. al., 2018) with a read depth of 10 or 100 using the procedure outlined in Section 3.1.
+
+**Alternative Simulations when Genotypes are Known**
+```{r}
+## Boxplots
+alt_g <- alt_g %>%
+  mutate(n = as.factor(n),
+         genofreq = factor(genofreq, levels=c("c(0.2, 0.2, 0.2, 0.2, 0.2)","c(0.4, 0.1, 0, 0.1, 0.4)")))
+
+
+alt_g_bp <- ggplot(data = alt_g, mapping = aes(x = n, y = logbf)) +
+  geom_boxplot() +
+  facet_wrap(~genofreq, scales = "free") +
+  xlab("Sample Size") +
+  ylab("Log Bayes Factor") +
+  theme_bw() +
+  theme(strip.background = element_rect(fill = "white")) +
+  geom_hline(yintercept = 0, lty = 2)
+
+ggplotly(alt_g_bp)
+```
+
+
+**Alternative Simulations using Genotype Likelihoods**
+```{r}
+## Boxplots
+alt_gl <- alt_gl %>%
+  mutate(n = as.factor(n),
+         genofreq = factor(genofreq, levels=c("c(0.2, 0.2, 0.2, 0.2, 0.2)","c(0.4, 0.1, 0, 0.1, 0.4)")))
+
+ ggplot(data = alt_gl, mapping = aes(x = n, y = logbf, color = as.factor(rd))) +
+  geom_boxplot() +
+  facet_wrap(~genofreq) +
+  xlab("Sample Size") +
+  ylab("Log Bayes Factor") +
+  theme_bw() +
+  theme(strip.background = element_rect(fill = "white")) +
+  geom_hline(yintercept = 0, lty = 2)
+
+```
+
+
+**Null Simulations**
+
+In this section, we simulated offspring genotypes from parental genotypes using the following $G_1, G_2, n, \alpha,$ and  $\xi$:
+
+  $(G_1, G_2) \in \{(0, 1), (0, 2), (1, 1), (1, 2), (2, 2)\}$
+  $n \in \{10, 100, 1000\}$ 
+  $\alpha \in \{0, 1/12, 1/6\}$ 
+  $\xi \in \{0, 1/6, 1/3\}$
+
+
+
+**Null Simulations when Genotypes are Known**
+
+We simulated offspring genotypes given parental genotypes using the gamete probabilities from Table 2.2 and the offspring genotypes from Table 1.1. Genotypes were simulated given those offspring frequencies from a multinomial distribution (2.1).
+```{r}
+## Q-Q Plot of the Chi-Square p-values
+null_g %>%
+  mutate(n = as.factor(n),
+         `Parent Genotypes` = paste0("(", p1, ",", p2, ")"),
+         alpha = paste0("alpha==", as.character(MASS::fractions(alpha))),
+         xi = paste0("xi==", as.character(MASS::fractions(xi))),
+         xi = parse_factor(xi)) %>%
+ggplot(aes(sample=chisq_pvalue, color = n)) +
+    geom_qq(size = 2, distribution = qunif) +
+  geom_abline(slope = 1, intercept = 0) +
+  facet_grid(alpha ~ xi, labeller = label_parsed) +
+    xlab("Theoretical Quantiles") +
+    ylab("Sample Quantiles") +
+    theme_bw() +
+    theme(strip.background = element_rect(fill = "white"))
+
+##facet for scenarios
+
+
+## Boxplots
+
+  null_g %>%
+  mutate(n = as.factor(n),
+         `Parent Genotypes` = paste0("(", p1, ",", p2, ")"),
+         alpha = paste0("alpha==", as.character(MASS::fractions(alpha))),
+         xi = paste0("xi==", as.character(MASS::fractions(xi))),
+         xi = parse_factor(xi)) %>%
+  ggplot(mapping = aes(x = n, y = logbf, color = `Parent Genotypes`)) +
+  geom_boxplot() +
+  facet_grid(alpha ~ xi, labeller = label_parsed) +
+  xlab("Sample Size") +
+  ylab("Log Bayes Factor") +
+  theme_bw() +
+  theme(strip.background = element_rect(fill = "white")) +
+  geom_hline(yintercept = 0, lty = 2)
+
+```
+
+
+**Null Simulations using Genotype Likelihoods**
+```{r}
+## Q-Q Plot of the Chi Square values
+ggplot(null_gl, aes(sample=chisq_pvalue)) +
+    stat_qq_line() +
+    stat_qq(size = 2, color = "hotpink") +
+    ggtitle("Uniform Q-Q Plot of Chi-Sq p-values (Null Sims, Genotype Likelihoods)") +
+    xlab("Theoretical Quantiles") +
+    ylab("Sample Quantiles") +
+    theme_bw() +
+    theme(strip.background = element_rect(fill = "white"))
+
+## Boxplots
+
+    # Log Bayes Factor
+
+  null_gl %>%
+  mutate(n = as.factor(n),
+         alpha = paste0("alpha==", as.character(MASS::fractions(alpha))),
+         xi = paste0("xi==", as.character(MASS::fractions(xi))),
+         xi = parse_factor(xi)) %>%
+  ggplot(mapping = aes(x = n, y = logbf, color = n)) +
+  geom_boxplot() +
+  facet_grid(alpha ~ xi, labeller = label_parsed) +
+  xlab("Sample Size") +
+  ylab("Log Bayes Factor") +
+  theme_bw() +
+  theme(strip.background = element_rect(fill = "white")) +
+  geom_hline(yintercept = 0, lty = 2)
+  
+   # Chi square Statistic
+  
+    null_gl %>%
+  mutate(n = as.factor(n),
+         alpha = paste0("alpha==", as.character(MASS::fractions(alpha))),
+         xi = paste0("xi==", as.character(MASS::fractions(xi))),
+         xi = parse_factor(xi)) %>%
+  ggplot(mapping = aes(x = n, y = chisq_stat, color = n)) +
+  geom_boxplot() +
+  facet_grid(alpha ~ xi, labeller = label_parsed) +
+  xlab("Sample Size") +
+  ylab("Log Bayes Factor") +
+  theme_bw() +
+  theme(strip.background = element_rect(fill = "white")) +
+  geom_hline(yintercept = 0, lty = 2)
+  
+   # Posterior Mean of alpha
+  
+    null_gl %>%
+  mutate(n = as.factor(n),
+         alpha = paste0("alpha==", as.character(MASS::fractions(alpha))),
+         xi = paste0("xi==", as.character(MASS::fractions(xi))),
+         xi = parse_factor(xi)) %>%
+  ggplot(mapping = aes(x = n, y = pm_alpha, color = n)) +
+  geom_boxplot() +
+  facet_grid(alpha ~ xi, labeller = label_parsed) +
+  xlab("Sample Size") +
+  ylab("Posterior Mean of Alpha") +
+  theme_bw() +
+  theme(strip.background = element_rect(fill = "white")) +
+  geom_hline(yintercept = 0, lty = 2)
+  
+   # Posterior Mean of xi
+    
+      null_gl %>%
+  mutate(n = as.factor(n),
+         alpha = paste0("alpha==", as.character(MASS::fractions(alpha))),
+         xi = paste0("xi==", as.character(MASS::fractions(xi))),
+         xi = parse_factor(xi)) %>%
+  ggplot(mapping = aes(x = n, y = pm_xi, color = n)) +
+  geom_boxplot() +
+  facet_grid(alpha ~ xi, labeller = label_parsed) +
+  xlab("Sample Size") +
+  ylab("Posterior Mean of Xi") +
+  theme_bw() +
+  theme(strip.background = element_rect(fill = "white")) +
+  geom_hline(yintercept = 0, lty = 2)
+      
+      
+      
+      ##two diff--one w rd 10 and the other 100
+      ## color pg 
+```
+
+```{r}
+# looking at pm alpha
+hist1 <- ggplot(null_g, mapping = aes(x = pm_alpha, color = as.factor(alpha))) +
+  geom_histogram(bins = 100) +
+  facet_grid(rows = vars(n), cols = vars(alpha)) +
+  theme_bw()
+
+ggplotly(hist1)
+
+# looking at pm xi
+hist2 <- ggplot(null_g, mapping = aes(x = pm_xi, color = as.factor(xi))) +
+  geom_histogram(bins = 100) +
+  facet_grid(rows = vars(n), cols = vars(xi)) +
+  theme_bw()
+
+ggplotly(hist2)
+
+##plots for alpha @ 01 11 boxplots !!
+```
