@@ -120,6 +120,7 @@ null_g %>%
 
 ## Genotype Likelihoods - Uniform Chi Sq Plots
 
+#p1 = 0, p2 = 1, rd = 10
 null_gl %>%
   mutate(n = as.factor(n),
          alpha = paste0("alpha==", as.character(MASS::fractions(alpha))),
@@ -128,7 +129,8 @@ null_gl %>%
          xi = parse_factor(xi),
          p1 = as.factor(p1),
          p2 = as.factor(p2)) %>%
-  filter(p1 == 0 & p2 == 1) %>%
+  filter(p1 == 0 & p2 == 1,
+         rd == 10) %>%
   ggplot(aes(sample=chisq_pvalue, color = n)) +
   geom_qq(size = 2, distribution = qunif) +
   geom_abline(slope = 1, intercept = 0) +
@@ -139,7 +141,7 @@ null_gl %>%
   theme_bw() +
   theme(strip.background = element_rect(fill = "white"))
 
-
+#p1 = 0, p2 = 1, rd = 100
 null_gl %>%
   mutate(n = as.factor(n),
          alpha = paste0("alpha==", as.character(MASS::fractions(alpha))),
@@ -148,7 +150,8 @@ null_gl %>%
          xi = parse_factor(xi),
          p1 = as.factor(p1),
          p2 = as.factor(p2)) %>%
-  filter(p1 == 0 & p2 == 2) %>%
+  filter(p1 == 0 & p2 == 1,
+         rd == 100) %>%
   ggplot(aes(sample=chisq_pvalue, color = n)) +
   geom_qq(size = 2, distribution = qunif) +
   geom_abline(slope = 1, intercept = 0) +
@@ -159,7 +162,7 @@ null_gl %>%
   theme_bw() +
   theme(strip.background = element_rect(fill = "white"))
 
-
+#p1 = 0, p2 = 2, rd = 10
 null_gl %>%
   mutate(n = as.factor(n),
          alpha = paste0("alpha==", as.character(MASS::fractions(alpha))),
@@ -168,7 +171,8 @@ null_gl %>%
          xi = parse_factor(xi),
          p1 = as.factor(p1),
          p2 = as.factor(p2)) %>%
-  filter(p1 == 1 & p2 == 1) %>%
+  filter(p1 == 0 & p2 == 2,
+         rd = 10) %>%
   ggplot(aes(sample=chisq_pvalue, color = n)) +
   geom_qq(size = 2, distribution = qunif) +
   geom_abline(slope = 1, intercept = 0) +
@@ -179,7 +183,7 @@ null_gl %>%
   theme_bw() +
   theme(strip.background = element_rect(fill = "white"))
 
-
+#p1 = 0, p2 = 2, rd = 100
 null_gl %>%
   mutate(n = as.factor(n),
          alpha = paste0("alpha==", as.character(MASS::fractions(alpha))),
@@ -188,7 +192,8 @@ null_gl %>%
          xi = parse_factor(xi),
          p1 = as.factor(p1),
          p2 = as.factor(p2)) %>%
-  filter(p1 == 1 & p2 == 2) %>%
+  filter(p1 == 0 & p2 == 2,
+         rd = 100) %>%
   ggplot(aes(sample=chisq_pvalue, color = n)) +
   geom_qq(size = 2, distribution = qunif) +
   geom_abline(slope = 1, intercept = 0) +
@@ -199,7 +204,7 @@ null_gl %>%
   theme_bw() +
   theme(strip.background = element_rect(fill = "white"))
 
-
+#p1 = 1, p2 = 1, rd = 10
 null_gl %>%
   mutate(n = as.factor(n),
          alpha = paste0("alpha==", as.character(MASS::fractions(alpha))),
@@ -208,7 +213,113 @@ null_gl %>%
          xi = parse_factor(xi),
          p1 = as.factor(p1),
          p2 = as.factor(p2)) %>%
-  filter(p1 == 2 & p2 == 2) %>%
+  filter(p1 == 1 & p2 == 1,
+         rd = 10) %>%
+  ggplot(aes(sample=chisq_pvalue, color = n)) +
+  geom_qq(size = 2, distribution = qunif) +
+  geom_abline(slope = 1, intercept = 0) +
+  facet_grid(alpha ~ xi, labeller = label_parsed) +
+  xlab("Theoretical Quantiles") +
+  ylab("Sample Quantiles") +
+  scale_color_manual(values = girlboss_palette("girlboss_in_question")) +
+  theme_bw() +
+  theme(strip.background = element_rect(fill = "white"))
+
+#p1 = 1, p2 = 1, rd = 100
+null_gl %>%
+  mutate(n = as.factor(n),
+         alpha = paste0("alpha==", as.character(MASS::fractions(alpha))),
+         alpha = parse_factor(alpha),
+         xi = paste0("xi==", as.character(MASS::fractions(xi))),
+         xi = parse_factor(xi),
+         p1 = as.factor(p1),
+         p2 = as.factor(p2)) %>%
+  filter(p1 == 1 & p2 == 1,
+         rd = 100) %>%
+  ggplot(aes(sample=chisq_pvalue, color = n)) +
+  geom_qq(size = 2, distribution = qunif) +
+  geom_abline(slope = 1, intercept = 0) +
+  facet_grid(alpha ~ xi, labeller = label_parsed) +
+  xlab("Theoretical Quantiles") +
+  ylab("Sample Quantiles") +
+  scale_color_manual(values = girlboss_palette("girlboss_in_question")) +
+  theme_bw() +
+  theme(strip.background = element_rect(fill = "white"))
+
+#p1 = 1, p2 = 2, rd = 10
+null_gl %>%
+  mutate(n = as.factor(n),
+         alpha = paste0("alpha==", as.character(MASS::fractions(alpha))),
+         alpha = parse_factor(alpha),
+         xi = paste0("xi==", as.character(MASS::fractions(xi))),
+         xi = parse_factor(xi),
+         p1 = as.factor(p1),
+         p2 = as.factor(p2)) %>%
+  filter(p1 == 1 & p2 == 2,
+         rd = 10) %>%
+  ggplot(aes(sample=chisq_pvalue, color = n)) +
+  geom_qq(size = 2, distribution = qunif) +
+  geom_abline(slope = 1, intercept = 0) +
+  facet_grid(alpha ~ xi, labeller = label_parsed) +
+  xlab("Theoretical Quantiles") +
+  ylab("Sample Quantiles") +
+  scale_color_manual(values = girlboss_palette("girlboss_in_question")) +
+  theme_bw() +
+  theme(strip.background = element_rect(fill = "white"))
+
+#p1 = 1, p2 = 2, rd = 100
+null_gl %>%
+  mutate(n = as.factor(n),
+         alpha = paste0("alpha==", as.character(MASS::fractions(alpha))),
+         alpha = parse_factor(alpha),
+         xi = paste0("xi==", as.character(MASS::fractions(xi))),
+         xi = parse_factor(xi),
+         p1 = as.factor(p1),
+         p2 = as.factor(p2)) %>%
+  filter(p1 == 1 & p2 == 2,
+         rd = 100) %>%
+  ggplot(aes(sample=chisq_pvalue, color = n)) +
+  geom_qq(size = 2, distribution = qunif) +
+  geom_abline(slope = 1, intercept = 0) +
+  facet_grid(alpha ~ xi, labeller = label_parsed) +
+  xlab("Theoretical Quantiles") +
+  ylab("Sample Quantiles") +
+  scale_color_manual(values = girlboss_palette("girlboss_in_question")) +
+  theme_bw() +
+  theme(strip.background = element_rect(fill = "white"))
+
+#p1 = 2, p2 = 2, rd = 10
+null_gl %>%
+  mutate(n = as.factor(n),
+         alpha = paste0("alpha==", as.character(MASS::fractions(alpha))),
+         alpha = parse_factor(alpha),
+         xi = paste0("xi==", as.character(MASS::fractions(xi))),
+         xi = parse_factor(xi),
+         p1 = as.factor(p1),
+         p2 = as.factor(p2)) %>%
+  filter(p1 == 2 & p2 == 2,
+         rd = 10) %>%
+  ggplot(aes(sample=chisq_pvalue, color = n)) +
+  geom_qq(size = 2, distribution = qunif) +
+  geom_abline(slope = 1, intercept = 0) +
+  facet_grid(alpha ~ xi, labeller = label_parsed) +
+  xlab("Theoretical Quantiles") +
+  ylab("Sample Quantiles") +
+  scale_color_manual(values = girlboss_palette("girlboss_in_question")) +
+  theme_bw() +
+  theme(strip.background = element_rect(fill = "white"))
+
+#p1 = 2, p2 = 2, rd = 100
+null_gl %>%
+  mutate(n = as.factor(n),
+         alpha = paste0("alpha==", as.character(MASS::fractions(alpha))),
+         alpha = parse_factor(alpha),
+         xi = paste0("xi==", as.character(MASS::fractions(xi))),
+         xi = parse_factor(xi),
+         p1 = as.factor(p1),
+         p2 = as.factor(p2)) %>%
+  filter(p1 == 2 & p2 == 2,
+         rd = 100) %>%
   ggplot(aes(sample=chisq_pvalue, color = n)) +
   geom_qq(size = 2, distribution = qunif) +
   geom_abline(slope = 1, intercept = 0) +
