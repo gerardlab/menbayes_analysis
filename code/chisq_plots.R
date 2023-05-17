@@ -37,6 +37,7 @@ ggplot(aes(sample=chisq_pvalue, color = n)) +
     theme_bw() +
     theme(strip.background = element_rect(fill = "white"))
 
+ggsave("ucsq_p1_0_p2_1.pdf", plot = last_plot(), width = 7, height = 5, units = "in", device = "pdf", path = "./output")
 
 null_g %>%
   mutate(n = as.factor(n),
