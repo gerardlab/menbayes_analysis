@@ -33,11 +33,11 @@ ggplot(aes(sample=chisq_pvalue, color = n)) +
     facet_grid(alpha ~ xi, labeller = label_parsed) +
     xlab("Theoretical Quantiles") +
     ylab("Sample Quantiles") +
-    scale_color_manual(values = girlboss_palette("girlboss_in_question")) +
+    scale_color_manual(values = girlboss_palette("elf_bar")) +
     theme_bw() +
     theme(strip.background = element_rect(fill = "white"))
 
-ggsave("ucsq_p1_0_p2_1.pdf", plot = last_plot(), width = 7, height = 5, units = "in", device = "pdf", path = "./output")
+ggsave("ucsq_p1_0_p2_1_6623.pdf", plot = last_plot(), width = 6, height = 6, units = "in", device = "pdf", path = "./output")
 
 null_g %>%
   mutate(n = as.factor(n),
@@ -54,10 +54,11 @@ null_g %>%
   facet_grid(alpha ~ xi, labeller = label_parsed) +
   xlab("Theoretical Quantiles") +
   ylab("Sample Quantiles") +
-  scale_color_manual(values = girlboss_palette("girlboss_in_question")) +
+  scale_color_manual(values = girlboss_palette("elf_bar")) +
   theme_bw() +
   theme(strip.background = element_rect(fill = "white"))
 
+ggsave("ucsq_p1_0_p2_2_6623.pdf", plot = last_plot(), width = 6, height = 6, units = "in", device = "pdf", path = "./output")
 
 null_g %>%
   mutate(n = as.factor(n),
@@ -74,9 +75,11 @@ null_g %>%
   facet_grid(alpha ~ xi, labeller = label_parsed) +
   xlab("Theoretical Quantiles") +
   ylab("Sample Quantiles") +
-  scale_color_manual(values = girlboss_palette("girlboss_in_question")) +
+  scale_color_manual(values = girlboss_palette("elf_bar")) +
   theme_bw() +
   theme(strip.background = element_rect(fill = "white"))
+
+ggsave("ucsq_p1_1_p2_1_6623.pdf", plot = last_plot(), width = 6, height = 6, units = "in", device = "pdf", path = "./output")
 
 
 null_g %>%
@@ -94,10 +97,11 @@ null_g %>%
   facet_grid(alpha ~ xi, labeller = label_parsed) +
   xlab("Theoretical Quantiles") +
   ylab("Sample Quantiles") +
-  scale_color_manual(values = girlboss_palette("girlboss_in_question")) +
+  scale_color_manual(values = girlboss_palette("elf_bar")) +
   theme_bw() +
   theme(strip.background = element_rect(fill = "white"))
 
+ggsave("ucsq_p1_1_p2_2_6623.pdf", plot = last_plot(), width = 6, height = 6, units = "in", device = "pdf", path = "./output")
 
 null_g %>%
   mutate(n = as.factor(n),
@@ -114,9 +118,11 @@ null_g %>%
   facet_grid(alpha ~ xi, labeller = label_parsed) +
   xlab("Theoretical Quantiles") +
   ylab("Sample Quantiles") +
-  scale_color_manual(values = girlboss_palette("girlboss_in_question")) +
+  scale_color_manual(values = girlboss_palette("elf_bar")) +
   theme_bw() +
   theme(strip.background = element_rect(fill = "white"))
+
+ggsave("ucsq_p1_2_p2_2_6623.pdf", plot = last_plot(), width = 6, height = 6, units = "in", device = "pdf", path = "./output")
 
 ## Genotype Likelihoods - Uniform Chi Sq Plots
 
@@ -137,9 +143,11 @@ null_gl %>%
   facet_grid(alpha ~ xi, labeller = label_parsed) +
   xlab("Theoretical Quantiles") +
   ylab("Sample Quantiles") +
-  scale_color_manual(values = girlboss_palette("girlboss_in_question")) +
+  scale_color_manual(values = girlboss_palette("elf_bar")) +
   theme_bw() +
   theme(strip.background = element_rect(fill = "white"))
+
+ggsave("ucsq_gl_rd10_p1_0_p2_1_6623.pdf", plot = last_plot(), width = 6, height = 6, units = "in", device = "pdf", path = "./output")
 
 #p1 = 0, p2 = 1, rd = 100
 null_gl %>%
@@ -158,9 +166,11 @@ null_gl %>%
   facet_grid(alpha ~ xi, labeller = label_parsed) +
   xlab("Theoretical Quantiles") +
   ylab("Sample Quantiles") +
-  scale_color_manual(values = girlboss_palette("girlboss_in_question")) +
+  scale_color_manual(values = girlboss_palette("elf_bar")) +
   theme_bw() +
   theme(strip.background = element_rect(fill = "white"))
+
+ggsave("ucsq_gl_rd_100_p1_0_p2_1_6623.pdf", plot = last_plot(), width = 6, height = 6, units = "in", device = "pdf", path = "./output")
 
 #p1 = 0, p2 = 2, rd = 10
 null_gl %>%
@@ -172,16 +182,18 @@ null_gl %>%
          p1 = as.factor(p1),
          p2 = as.factor(p2)) %>%
   filter(p1 == 0 & p2 == 2,
-         rd = 10) %>%
+         rd == 10) %>%
   ggplot(aes(sample=chisq_pvalue, color = n)) +
   geom_qq(size = 2, distribution = qunif) +
   geom_abline(slope = 1, intercept = 0) +
   facet_grid(alpha ~ xi, labeller = label_parsed) +
   xlab("Theoretical Quantiles") +
   ylab("Sample Quantiles") +
-  scale_color_manual(values = girlboss_palette("girlboss_in_question")) +
+  scale_color_manual(values = girlboss_palette("elf_bar")) +
   theme_bw() +
   theme(strip.background = element_rect(fill = "white"))
+
+ggsave("ucsq_gl_rd_10_p1_0_p2_2_6623.pdf", plot = last_plot(), width = 6, height = 6, units = "in", device = "pdf", path = "./output")
 
 #p1 = 0, p2 = 2, rd = 100
 null_gl %>%
@@ -193,16 +205,18 @@ null_gl %>%
          p1 = as.factor(p1),
          p2 = as.factor(p2)) %>%
   filter(p1 == 0 & p2 == 2,
-         rd = 100) %>%
+         rd == 100) %>%
   ggplot(aes(sample=chisq_pvalue, color = n)) +
   geom_qq(size = 2, distribution = qunif) +
   geom_abline(slope = 1, intercept = 0) +
   facet_grid(alpha ~ xi, labeller = label_parsed) +
   xlab("Theoretical Quantiles") +
   ylab("Sample Quantiles") +
-  scale_color_manual(values = girlboss_palette("girlboss_in_question")) +
+  scale_color_manual(values = girlboss_palette("elf_bar")) +
   theme_bw() +
   theme(strip.background = element_rect(fill = "white"))
+
+ggsave("ucsq_gl_rd_100_p1_0_p2_2_6623.pdf", plot = last_plot(), width = 6, height = 6, units = "in", device = "pdf", path = "./output")
 
 #p1 = 1, p2 = 1, rd = 10
 null_gl %>%
@@ -214,16 +228,18 @@ null_gl %>%
          p1 = as.factor(p1),
          p2 = as.factor(p2)) %>%
   filter(p1 == 1 & p2 == 1,
-         rd = 10) %>%
+         rd == 10) %>%
   ggplot(aes(sample=chisq_pvalue, color = n)) +
   geom_qq(size = 2, distribution = qunif) +
   geom_abline(slope = 1, intercept = 0) +
   facet_grid(alpha ~ xi, labeller = label_parsed) +
   xlab("Theoretical Quantiles") +
   ylab("Sample Quantiles") +
-  scale_color_manual(values = girlboss_palette("girlboss_in_question")) +
+  scale_color_manual(values = girlboss_palette("elf_bar")) +
   theme_bw() +
   theme(strip.background = element_rect(fill = "white"))
+
+ggsave("ucsq_gl_rd_10_p1_1_p2_1_6623.pdf", plot = last_plot(), width = 6, height = 6, units = "in", device = "pdf", path = "./output")
 
 #p1 = 1, p2 = 1, rd = 100
 null_gl %>%
@@ -235,16 +251,18 @@ null_gl %>%
          p1 = as.factor(p1),
          p2 = as.factor(p2)) %>%
   filter(p1 == 1 & p2 == 1,
-         rd = 100) %>%
+         rd == 100) %>%
   ggplot(aes(sample=chisq_pvalue, color = n)) +
   geom_qq(size = 2, distribution = qunif) +
   geom_abline(slope = 1, intercept = 0) +
   facet_grid(alpha ~ xi, labeller = label_parsed) +
   xlab("Theoretical Quantiles") +
   ylab("Sample Quantiles") +
-  scale_color_manual(values = girlboss_palette("girlboss_in_question")) +
+  scale_color_manual(values = girlboss_palette("elf_bar")) +
   theme_bw() +
   theme(strip.background = element_rect(fill = "white"))
+
+ggsave("ucsq_gl_rd_100_p1_1_p2_1_6623.pdf", plot = last_plot(), width = 6, height = 6, units = "in", device = "pdf", path = "./output")
 
 #p1 = 1, p2 = 2, rd = 10
 null_gl %>%
@@ -256,16 +274,18 @@ null_gl %>%
          p1 = as.factor(p1),
          p2 = as.factor(p2)) %>%
   filter(p1 == 1 & p2 == 2,
-         rd = 10) %>%
+         rd == 10) %>%
   ggplot(aes(sample=chisq_pvalue, color = n)) +
   geom_qq(size = 2, distribution = qunif) +
   geom_abline(slope = 1, intercept = 0) +
   facet_grid(alpha ~ xi, labeller = label_parsed) +
   xlab("Theoretical Quantiles") +
   ylab("Sample Quantiles") +
-  scale_color_manual(values = girlboss_palette("girlboss_in_question")) +
+  scale_color_manual(values = girlboss_palette("elf_bar")) +
   theme_bw() +
   theme(strip.background = element_rect(fill = "white"))
+
+ggsave("ucsq_gl_rd_10_p1_1_p2_2_6623.pdf", plot = last_plot(), width = 6, height = 6, units = "in", device = "pdf", path = "./output")
 
 #p1 = 1, p2 = 2, rd = 100
 null_gl %>%
@@ -277,16 +297,18 @@ null_gl %>%
          p1 = as.factor(p1),
          p2 = as.factor(p2)) %>%
   filter(p1 == 1 & p2 == 2,
-         rd = 100) %>%
+         rd == 100) %>%
   ggplot(aes(sample=chisq_pvalue, color = n)) +
   geom_qq(size = 2, distribution = qunif) +
   geom_abline(slope = 1, intercept = 0) +
   facet_grid(alpha ~ xi, labeller = label_parsed) +
   xlab("Theoretical Quantiles") +
   ylab("Sample Quantiles") +
-  scale_color_manual(values = girlboss_palette("girlboss_in_question")) +
+  scale_color_manual(values = girlboss_palette("elf_bar")) +
   theme_bw() +
   theme(strip.background = element_rect(fill = "white"))
+
+ggsave("ucsq_gl_rd_100_p1_1_p2_2_6623.pdf", plot = last_plot(), width = 6, height = 6, units = "in", device = "pdf", path = "./output")
 
 #p1 = 2, p2 = 2, rd = 10
 null_gl %>%
@@ -298,16 +320,18 @@ null_gl %>%
          p1 = as.factor(p1),
          p2 = as.factor(p2)) %>%
   filter(p1 == 2 & p2 == 2,
-         rd = 10) %>%
+         rd == 10) %>%
   ggplot(aes(sample=chisq_pvalue, color = n)) +
   geom_qq(size = 2, distribution = qunif) +
   geom_abline(slope = 1, intercept = 0) +
   facet_grid(alpha ~ xi, labeller = label_parsed) +
   xlab("Theoretical Quantiles") +
   ylab("Sample Quantiles") +
-  scale_color_manual(values = girlboss_palette("girlboss_in_question")) +
+  scale_color_manual(values = girlboss_palette("elf_bar")) +
   theme_bw() +
   theme(strip.background = element_rect(fill = "white"))
+
+ggsave("ucsq_gl_rd_10_p1_2_p2_2_6623.pdf", plot = last_plot(), width = 6, height = 6, units = "in", device = "pdf", path = "./output")
 
 #p1 = 2, p2 = 2, rd = 100
 null_gl %>%
@@ -319,13 +343,15 @@ null_gl %>%
          p1 = as.factor(p1),
          p2 = as.factor(p2)) %>%
   filter(p1 == 2 & p2 == 2,
-         rd = 100) %>%
+         rd == 100) %>%
   ggplot(aes(sample=chisq_pvalue, color = n)) +
   geom_qq(size = 2, distribution = qunif) +
   geom_abline(slope = 1, intercept = 0) +
   facet_grid(alpha ~ xi, labeller = label_parsed) +
   xlab("Theoretical Quantiles") +
   ylab("Sample Quantiles") +
-  scale_color_manual(values = girlboss_palette("girlboss_in_question")) +
+  scale_color_manual(values = girlboss_palette("elf_bar")) +
   theme_bw() +
   theme(strip.background = element_rect(fill = "white"))
+
+ggsave("ucsq_gl_rd_100_p1_2_p2_2_6623.pdf", plot = last_plot(), width = 6, height = 6, units = "in", device = "pdf", path = "./output")

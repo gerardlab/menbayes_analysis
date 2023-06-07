@@ -37,7 +37,7 @@
     theme(strip.background = element_rect(fill = "white")) +
     geom_hline(yintercept = 0, lty = 2)
 
-  ggsave("alt_g_boxplot.pdf", plot = last_plot(), device = "pdf", path = "./output")
+  ggsave("alt_g_boxplot_6723.pdf", plot = last_plot(), width = 6, height = 4, units = "in", device = "pdf", path = "./output")
 
     ## Genotype Likelihoods - Boxplot
 
@@ -53,12 +53,12 @@
     xlab("Sample Size") +
     ylab("Log Bayes Factor") +
     labs(color = "Read Depth") +
-    scale_color_manual(values = girlboss_palette("girlboss_in_question")) +
+    scale_color_manual(values = girlboss_palette("elf_bar"), name = "Parent\nGenotypes") +
     theme_bw() +
     theme(strip.background = element_rect(fill = "white")) +
     geom_hline(yintercept = 0, lty = 2)
 
-    ggsave("alt_gl_boxplot.pdf", plot = last_plot(), device = "pdf", path = "./output")
+    ggsave("alt_gl_boxplot_6623.pdf", plot = last_plot(), width = 6, height = 3, units = "in", device = "pdf", path = "./output")
 
 ## Null Sims
 
@@ -74,12 +74,12 @@
       facet_grid(alpha ~ xi, labeller = label_parsed) +
       xlab("Sample Size") +
       ylab("Log Bayes Factor") +
-      scale_color_manual(values = girlboss_palette("girlboss_in_question")) +
+      scale_color_manual(values = girlboss_palette("elf_bar"), name = "Parent\nGenotypes") +
       theme_bw() +
       theme(strip.background = element_rect(fill = "white")) +
       geom_hline(yintercept = 0, lty = 2)
 
-   ggsave("null_g_boxplot.pdf", plot = last_plot(), width = 7, height = 5, units = "in", device = "pdf", path = "./output")
+   ggsave("null_g_boxplot_6623.pdf", plot = last_plot(), width = 6, height = 6, units = "in", device = "pdf", path = "./output")
 
 
     ## Genotype Likelihoods - Boxplot
@@ -97,12 +97,12 @@
       facet_grid(alpha ~ xi, labeller = label_parsed) +
       xlab("Sample Size") +
       ylab("Log Bayes Factor") +
-      scale_color_manual(values = girlboss_palette("girlboss_in_question")) +
+      scale_color_manual(values = girlboss_palette("elf_bar"), name = "Parent\nGenotypes") +
       theme_bw() +
       theme(strip.background = element_rect(fill = "white")) +
       geom_hline(yintercept = 0, lty = 2)
 
-   ggsave("null_gl_boxplot_rd10.pdf", plot = last_plot(), width = 7, height = 5, units = "in", device = "pdf", path = "./output")
+   ggsave("null_gl_boxplot_rd10_6723.pdf", plot = last_plot(), width = 6, height = 6, units = "in", device = "pdf", path = "./output")
 
    ##RD = 100
 
@@ -118,47 +118,9 @@
       facet_grid(alpha ~ xi, labeller = label_parsed) +
       xlab("Sample Size") +
       ylab("Log Bayes Factor") +
-      scale_color_manual(values = girlboss_palette("girlboss_in_question")) +
+      scale_color_manual(values = girlboss_palette("elf_bar"), name = "Parent\nGenotypes") +
       theme_bw() +
       theme(strip.background = element_rect(fill = "white")) +
       geom_hline(yintercept = 0, lty = 2)
 
-    ggsave("null_gl_boxplot_rd100.pdf", plot = last_plot(), width = 7, height = 5, units = "in", device = "pdf", path = "./output")
-
-    ## Genotypes Known - ChiSq QQ Plot -- can't get the loop to work. Separate file with
-    ## all plots (inefficiently) written out
-
-    chisq_plot <- function(df){
-      csqq <- ggplot(data = df, aes(sample=chisq_pvalue, color = as.factor(n))) +
-        geom_qq(size = 2, distribution = qunif) +
-        geom_abline(slope = 1, intercept = 0) +
-        facet_grid(alpha ~ xi, labeller = label_parsed) +
-        xlab("Theoretical Quantiles") +
-        ylab("Sample Quantiles") +
-        scale_color_manual(values = girlboss_palette("girlboss_in_question")) +
-        theme_bw() +
-        theme(strip.background = element_rect(fill = "white"))
-      print(csqq)
-    }
-
-
-    for (i in 0:2) {
-      for (j in 0:2) {
-
-        null_g %>%
-          mutate(n = as.factor(n),
-                 alpha = paste0("alpha==", as.character(MASS::fractions(alpha))),
-                 alpha = parse_factor(alpha),
-                 xi = paste0("xi==", as.character(MASS::fractions(xi))),
-                 xi = parse_factor(xi),
-                 p1 = as.factor(p1),
-                 p2 = as.factor(p2)) %>%
-          filter(p1 == i & p2 == j)
-
-        chisq_plot(df = null_g)
-
-      }
-    }
-
-    ## Genotype Likelihoods - ChiSq QQ Plot (same as above. can't get loop to work.)
-
+    ggsave("null_gl_boxplot_rd100_6623.pdf", plot = last_plot(), width = 6, height = 6, units = "in", device = "pdf", path = "./output")
