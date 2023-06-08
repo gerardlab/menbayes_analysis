@@ -53,12 +53,12 @@
     xlab("Sample Size") +
     ylab("Log Bayes Factor") +
     labs(color = "Read Depth") +
-    scale_color_manual(values = girlboss_palette("elf_bar"), name = "Parent\nGenotypes") +
+    scale_color_manual(values = girlboss_palette("elf_bar"), name = "Read\nDepth") +
     theme_bw() +
     theme(strip.background = element_rect(fill = "white")) +
     geom_hline(yintercept = 0, lty = 2)
 
-    ggsave("alt_gl_boxplot_6623.pdf", plot = last_plot(), width = 6, height = 3, units = "in", device = "pdf", path = "./output")
+    ggsave("alt_gl_boxplot_6723.pdf", plot = last_plot(), width = 6, height = 3, units = "in", device = "pdf", path = "./output")
 
 ## Null Sims
 
