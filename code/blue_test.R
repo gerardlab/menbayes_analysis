@@ -1,11 +1,38 @@
 library(updog)
-
+library(tidyverse)
 bluefits <- readRDS("./output/blue/bluefits.RDS")
 
 ## This will give you a array with dimensions SNPs by Individuals by Genotypes
 gl <- format_multidog(bluefits, varname = paste0("logL_", 0:4))
 p1vec <- bluefits$snpdf$ell1
 p2vec <- bluefits$snpdf$ell2
+
+pvec <- data.frame(p1vec, p2vec)
+
+pvec <- pvec %>%
+  filter((p1vec == 0 & p2vec == 1) |
+         (p1vec == 1 & p2vec == 0) |
+         (p1vec == 0 & p2vec == 2) |
+         (p1vec == 2 & p2vec == 0) |
+         (p1vec == 0 & p2vec == 3) |
+         (p1vec == 3 & p2vec == 0) |
+         (p1vec == 0 & p2vec == 4) |
+         (p1vec == 4 & p2vec == 0) |
+         (p1vec == 1 & p2vec == 1) |
+         (p1vec == 1 & p2vec == 2) |
+         (p1vec == 2 & p2vec == 1) |
+         (p1vec == 1 & p2vec == 3) |
+         (p1vec == 3 & p2vec == 1) |
+         (p1vec == 1 & p2vec == 4) |
+         (p1vec == 4 & p2vec == 1) |
+         (p1vec == 2 & p2vec == 3) |
+         (p1vec == 3 & p2vec == 2) |
+         (p1vec == 2 & p2vec == 4) |
+         (p1vec == 4 & p2vec == 2) |
+         (p1vec == 2 & p2vec == 2) |
+         (p1vec == 3 & p2vec == 3) |
+         (p1vec == 3 & p2vec == 4) |
+         (p1vec == 4 & p2vec == 3))
 
 ## This will give you the genotype likelihoods for the first snp
 View(gl[1, ,])
@@ -19,9 +46,9 @@ blue_df$chisq_stat <- NA_real_ #missing value indicator for chi-sq statistic of 
 blue_df$chisq_pvalue <- NA_real_ #missing value indicator for chi-sq p-value of observed v. expected genotype counts
 
 for (i in seq_len(dim(gl)[[1]])) {
-  glmat <- gl[i , ,]
-  p1 <- p1vec[i]
-  p2 <- p2vec[i]
+  glmat <- na.omit(gl[i , ,])
+  p1 <- pvec$p1vec[i]
+  p2 <- pvec$p2vec[i]
 
   ## Fit Bayes test here
   trash <- capture.output(
@@ -55,3 +82,5 @@ for (i in seq_len(dim(gl)[[1]])) {
 
   blue_df[i, ]
 }
+
+write.csv(blue_df, "./output/blue/blue_df.csv")
