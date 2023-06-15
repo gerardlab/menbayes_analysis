@@ -68,7 +68,7 @@ for (i in seq_len(dim(gl)[[1]])) {
     chi <- chisq_gl4(gl = glmat, l1 = p1, l2 = p2)
   )
 
-  ## Assign the i-th value of chisq_stat to be the chi-sq statistic
+  ## Assign the i-th value of chisq_stat to be the chi-sq statisticzo
   blue_df$chisq_stat[i] <- chi[[1]]
 
   ## Assign the i-th value of chisq_pvalue to be the chi-sq p-value
