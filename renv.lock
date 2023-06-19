@@ -1196,7 +1196,13 @@
     "menbayes": {
       "Package": "menbayes",
       "Version": "0.0.1",
-      "Source": "unknown",
+      "Source": "GitHub",
+      "RemoteType": "github",
+      "RemoteHost": "api.github.com",
+      "RemoteRepo": "menbayes",
+      "RemoteUsername": "gerardlab",
+      "RemoteRef": "HEAD",
+      "RemoteSha": "0bcc325fdc70a08bd7768e0ef1ac6d2af85eda19",
       "Requirements": [
         "BH",
         "R",
@@ -1211,7 +1217,7 @@
         "rstantools",
         "updog"
       ],
-      "Hash": "906596b113d1d69f605808178fa5fe39"
+      "Hash": "707446e24448d307bf862075813634ab"
     },
     "mgcv": {
       "Package": "mgcv",
