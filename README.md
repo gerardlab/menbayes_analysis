@@ -4,10 +4,9 @@
 
 To reproduce the results of the thesis:
 
-1. Install all of the required packages:
+1. Open up the menbayes_analysis R Project and restore the renv:
     ``` r
-    install.packages(c("tidyverse", "devtools", "hwep", "future", "updog", "doRNG", "doFuture", "foreach", "rgntools", "MASS", "ggthemes"))
-    devtools::install_github("gerardlab/menbayes")
+    renv::restore()
     ```
     
 2. Run `make` in the terminal.
