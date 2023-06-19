@@ -8,6 +8,28 @@ library(rngtools)
 library(doRNG)
 bluefits <- readRDS("./output/blue/bluefits.RDS")
 
+## Determine number of cores ----
+args <- commandArgs(trailingOnly = TRUE)
+if (length(args) == 0) {
+  nc <- 1
+} else {
+  eval(parse(text = args[[1]]))
+}
+cat(nc, "\n")
+
+## Register workers ----
+if (nc == 1) {
+  registerDoSEQ()
+  plan(sequential)
+} else {
+  registerDoFuture()
+  registerDoRNG()
+  plan(multisession, workers = nc)
+  if (getDoParWorkers() == 1) {
+    stop("nc > 1, but only one core registered")
+  }
+}
+
 ## This will give you an array with dimensions SNPs by Individuals by Genotypes
 gl <- format_multidog(bluefits, varname = paste0("logL_", 0:4))
 p1vec <- bluefits$snpdf$ell1
@@ -30,7 +52,7 @@ blue_df$pm_xi <- NA_real_ #missing value indicator for the posterior mean of xi
 blue_df$chisq_stat <- NA_real_ #missing value indicator for chi-sq statistic of observed v. expected genotype counts
 blue_df$chisq_pvalue <- NA_real_ #missing value indicator for chi-sq p-value of observed v. expected genotype counts
 
-for (i in seq_len(dim(gl)[[1]])) {
+outdf <- foreach(i = seq_len(dim(gl)[[1]]), .combine = rbind, .export = c("blue_df")) %dopar% {
   glmat <- na.omit(gl[i , ,])
   p1 <- pvec$p1vec[i]
   p2 <- pvec$p2vec[i]
@@ -68,4 +90,11 @@ for (i in seq_len(dim(gl)[[1]])) {
   blue_df[i, ]
 }
 
-write.csv(blue_df, "./output/blue/blue_df.csv")
+outdf$snp <- dimnames(gl)[[1]]
+
+## Unregister workers ----
+if (nc > 1) {
+  plan(sequential)
+}
+
+write.csv(outdf, "./output/blue/blue_df.csv")
