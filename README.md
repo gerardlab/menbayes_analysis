@@ -1,13 +1,12 @@
-# Code and Analysis for the master's thesis "Bayesian Tests for Genotype Frequencies in Experimental Tetraploid Populations" by Mira Thakkar
+# Code and Analysis for the master's thesis "Bayesian Tests for Segregation Distortion in Experimental Tetraploid Populations" by Mira Thakkar
 
 [![NSF-2132247](https://img.shields.io/badge/NSF-2132247-blue.svg)](https://nsf.gov/awardsearch/showAward?AWD_ID=2132247)
 
 To reproduce the results of the thesis:
 
-1. Install all of the required packages:
+1. Open up the menbayes_analysis R Project and restore the renv:
     ``` r
-    install.packages(c("tidyverse", "devtools", "hwep", "future", "updog", "doRNG", "doFuture", "foreach", "rgntools", "MASS", "ggthemes"))
-    devtools::install_github("gerardlab/menbayes")
+    renv::restore()
     ```
     
 2. Run `make` in the terminal.

@@ -11,13 +11,17 @@ all : blue sims
 
 # Blueberry analysis ----
 .PHONY : blue
-blue : ./output/blue/bluefits.RDS
+blue : ./output/blue/blue_df.csv
 
 ./output/blue/bluefits.RDS : ./code/blue_up.R ./data/updog_input_240ind_Sweet_Indi.Rdata
 	mkdir -p ./output/rout
 	mkdir -p ./output/blue
 	$(rexec) '--args nc=$(nc)' $< ./output/rout/$(basename $(notdir $<)).Rout
 
+./output/blue/blue_df.csv : ./code/blue_test.R ./output/blue/bluefits.RDS
+	mkdir -p ./output/rout
+	mkdir -p ./output/blue
+	$(rexec) '--args nc=$(nc)' $< ./output/rout/$(basename $(notdir $<)).Rout
 
 # Sims ----
 .PHONY : sims
