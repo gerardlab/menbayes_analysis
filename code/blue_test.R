@@ -1,41 +1,21 @@
 library(updog)
+library(menbayes)
 library(tidyverse)
 bluefits <- readRDS("./output/blue/bluefits.RDS")
 
-## This will give you a array with dimensions SNPs by Individuals by Genotypes
+## This will give you an array with dimensions SNPs by Individuals by Genotypes
 gl <- format_multidog(bluefits, varname = paste0("logL_", 0:4))
 p1vec <- bluefits$snpdf$ell1
 p2vec <- bluefits$snpdf$ell2
 
 pvec <- data.frame(p1vec, p2vec)
 
+## Remove 0/0 and 4/4 and 0/4 and 4/0 parental genotype scenarios
 pvec <- pvec %>%
-  filter((p1vec == 0 & p2vec == 1) |
-         (p1vec == 1 & p2vec == 0) |
-         (p1vec == 0 & p2vec == 2) |
-         (p1vec == 2 & p2vec == 0) |
-         (p1vec == 0 & p2vec == 3) |
-         (p1vec == 3 & p2vec == 0) |
-         (p1vec == 0 & p2vec == 4) |
-         (p1vec == 4 & p2vec == 0) |
-         (p1vec == 1 & p2vec == 1) |
-         (p1vec == 1 & p2vec == 2) |
-         (p1vec == 2 & p2vec == 1) |
-         (p1vec == 1 & p2vec == 3) |
-         (p1vec == 3 & p2vec == 1) |
-         (p1vec == 1 & p2vec == 4) |
-         (p1vec == 4 & p2vec == 1) |
-         (p1vec == 2 & p2vec == 3) |
-         (p1vec == 3 & p2vec == 2) |
-         (p1vec == 2 & p2vec == 4) |
-         (p1vec == 4 & p2vec == 2) |
-         (p1vec == 2 & p2vec == 2) |
-         (p1vec == 3 & p2vec == 3) |
-         (p1vec == 3 & p2vec == 4) |
-         (p1vec == 4 & p2vec == 3))
-
-## This will give you the genotype likelihoods for the first snp
-View(gl[1, ,])
+  filter(!(p1vec == 0 & p2vec == 0 |
+            p1vec == 0 & p2vec == 4 |
+            p1vec == 4 & p2vec == 0 |
+            p1vec == 4 & p2vec == 4))
 
 ##Build dataframe
 blue_df <- data.frame(p1vec, p2vec)
