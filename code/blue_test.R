@@ -1,6 +1,11 @@
 library(updog)
 library(menbayes)
 library(tidyverse)
+library(future)
+library(foreach)
+library(doFuture)
+library(rngtools)
+library(doRNG)
 bluefits <- readRDS("./output/blue/bluefits.RDS")
 
 ## This will give you an array with dimensions SNPs by Individuals by Genotypes
