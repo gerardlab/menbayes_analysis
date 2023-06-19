@@ -30,32 +30,35 @@ if (nc == 1) {
   }
 }
 
+## Remove 0/0 and 4/4 and 0/4 and 4/0 parental genotype scenarios
+bluefits <- filter_snp(
+  x = bluefits,
+  expr = !(ell1 == 0 & ell2 == 0 |
+             ell1 == 0 & ell2 == 4 |
+             ell1 == 4 & ell2 == 0 |
+             ell1 == 4 & ell2 == 4)
+)
+
 ## This will give you an array with dimensions SNPs by Individuals by Genotypes
 gl <- format_multidog(bluefits, varname = paste0("logL_", 0:4))
 p1vec <- bluefits$snpdf$ell1
 p2vec <- bluefits$snpdf$ell2
 
-pvec <- data.frame(p1vec, p2vec)
-
-## Remove 0/0 and 4/4 and 0/4 and 4/0 parental genotype scenarios
-pvec <- pvec %>%
-  filter(!(p1vec == 0 & p2vec == 0 |
-            p1vec == 0 & p2vec == 4 |
-            p1vec == 4 & p2vec == 0 |
-            p1vec == 4 & p2vec == 4))
-
 ##Build dataframe
-blue_df <- data.frame(p1vec, p2vec)
+blue_df <- data.frame(snp = dimnames(gl)[[1]], p1 = p1vec, p2 = p2vec)
 blue_df$logbf <- NA_real_ #missing value indicator for log Bayes Factor
 blue_df$pm_alpha <- NA_real_ #missing value indicator for the posterior mean of alpha
 blue_df$pm_xi <- NA_real_ #missing value indicator for the posterior mean of xi
 blue_df$chisq_stat <- NA_real_ #missing value indicator for chi-sq statistic of observed v. expected genotype counts
 blue_df$chisq_pvalue <- NA_real_ #missing value indicator for chi-sq p-value of observed v. expected genotype counts
 
+## Sanity checks
+stopifnot(nrow(blue_df) == dim(gl)[[1]])
+
 outdf <- foreach(i = seq_len(dim(gl)[[1]]), .combine = rbind, .export = c("blue_df")) %dopar% {
   glmat <- na.omit(gl[i , ,])
-  p1 <- pvec$p1vec[i]
-  p2 <- pvec$p2vec[i]
+  p1 <- p1vec[[i]]
+  p2 <- p2vec[[i]]
 
   ## Fit Bayes test here
   trash <- capture.output(
@@ -89,8 +92,6 @@ outdf <- foreach(i = seq_len(dim(gl)[[1]]), .combine = rbind, .export = c("blue_
 
   blue_df[i, ]
 }
-
-outdf$snp <- dimnames(gl)[[1]]
 
 ## Unregister workers ----
 if (nc > 1) {
