@@ -62,11 +62,11 @@ facet_df_gl <- alpha_df_gl %>%
 # rd == 10
 
 alpha_df_gl %>%
-  filter(rd == 10) %>%
+  filter(xi == 0) %>%
 ggplot(mapping = aes(x = n, y = pm_alpha, fill = `Parent Genotypes`)) +
   geom_boxplot() +
   geom_hline(data = facet_df_gl, mapping = aes(yintercept = alpha_num), linetype = "dashed") +
-  facet_grid(alpha ~ xi, labeller = label_parsed) +
+  facet_grid(alpha ~ rd, labeller = label_parsed) +
   xlab("Sample Size") +
   ylab("Posterior Mean") +
   scale_fill_manual(values = girlboss_palette("elf_bar"), name = "Parent\nGenotypes") +
@@ -91,3 +91,6 @@ ggplot(data = alpha_df_gl, mapping = aes(x = n, y = pm_alpha, fill = `Parent Gen
   theme(strip.background = element_rect(fill = "white"))
 
 ggsave("null_gl_pmalpha_rd100_box_61923.pdf", plot = last_plot(), width = 6, height = 6, units = "in", device = "pdf", path = "./output")
+
+
+# just on

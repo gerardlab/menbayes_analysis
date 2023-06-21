@@ -64,14 +64,13 @@
 
     ## Genotypes Known - Boxplot
     null_g %>%
+      filter(xi == 0) %>%
       mutate(n = as.factor(n),
              `Parent Genotypes` = paste0("(", p1, ",", p2, ")"),
-             alpha = paste0("alpha==", as.character(MASS::fractions(alpha))),
-             xi = paste0("xi==", as.character(MASS::fractions(xi))),
-             xi = parse_factor(xi)) %>%
+             alpha = paste0("alpha==", as.character(MASS::fractions(alpha)))) %>%
       ggplot(mapping = aes(x = n, y = logbf, color = `Parent Genotypes`)) +
       geom_boxplot() +
-      facet_grid(alpha ~ xi, labeller = label_parsed) +
+      facet_grid(~ alpha, labeller = label_parsed) +
       xlab("Sample Size") +
       ylab("Log Bayes Factor") +
       scale_color_manual(values = girlboss_palette("elf_bar"), name = "Parent\nGenotypes") +
@@ -79,22 +78,22 @@
       theme(strip.background = element_rect(fill = "white")) +
       geom_hline(yintercept = 0, lty = 2)
 
-   ggsave("null_g_boxplot_6623.pdf", plot = last_plot(), width = 6, height = 6, units = "in", device = "pdf", path = "./output")
+   ggsave("null_g_boxplot_62123.pdf", plot = last_plot(), width = 6, height = 4, units = "in", device = "pdf", path = "./output")
 
 
     ## Genotype Likelihoods - Boxplot
 
     #RD = 10
    null_gl %>%
+     filter(xi == 0) %>%
       mutate(n = as.factor(n),
              `Parent Genotypes` = paste0("(", p1, ",", p2, ")"),
              alpha = paste0("alpha==", as.character(MASS::fractions(alpha))),
-             xi = paste0("xi==", as.character(MASS::fractions(xi))),
-             xi = parse_factor(xi)) %>%
-      filter(rd == 10) %>%
+             rd = paste0("rd==", rd),
+             rd = parse_factor(rd)) %>%
       ggplot(mapping = aes(x = n, y = logbf, color = `Parent Genotypes`)) +
       geom_boxplot() +
-      facet_grid(alpha ~ xi, labeller = label_parsed) +
+      facet_grid(alpha ~ rd, labeller = label_parsed) +
       xlab("Sample Size") +
       ylab("Log Bayes Factor") +
       scale_color_manual(values = girlboss_palette("elf_bar"), name = "Parent\nGenotypes") +
@@ -102,25 +101,4 @@
       theme(strip.background = element_rect(fill = "white")) +
       geom_hline(yintercept = 0, lty = 2)
 
-   ggsave("null_gl_boxplot_rd10_6723.pdf", plot = last_plot(), width = 6, height = 6, units = "in", device = "pdf", path = "./output")
-
-   ##RD = 100
-
-    null_gl %>%
-      mutate(n = as.factor(n),
-             `Parent Genotypes` = paste0("(", p1, ",", p2, ")"),
-             alpha = paste0("alpha==", as.character(MASS::fractions(alpha))),
-             xi = paste0("xi==", as.character(MASS::fractions(xi))),
-             xi = parse_factor(xi)) %>%
-      filter(rd == 100) %>%
-      ggplot(mapping = aes(x = n, y = logbf, color = `Parent Genotypes`)) +
-      geom_boxplot() +
-      facet_grid(alpha ~ xi, labeller = label_parsed) +
-      xlab("Sample Size") +
-      ylab("Log Bayes Factor") +
-      scale_color_manual(values = girlboss_palette("elf_bar"), name = "Parent\nGenotypes") +
-      theme_bw() +
-      theme(strip.background = element_rect(fill = "white")) +
-      geom_hline(yintercept = 0, lty = 2)
-
-    ggsave("null_gl_boxplot_rd100_6623.pdf", plot = last_plot(), width = 6, height = 6, units = "in", device = "pdf", path = "./output")
+   ggsave("null_gl_boxplot_rd10_62123.pdf", plot = last_plot(), width = 6, height = 6, units = "in", device = "pdf", path = "./output")
