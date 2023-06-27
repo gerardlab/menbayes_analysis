@@ -12,8 +12,6 @@ null_gl <- read.csv("./output/sims/null_sims_gl.csv")
 
 #PM ALPHA ANALYSIS
 
-
-
 #Null, genotypes known
 alpha_df <- null_g %>%
   mutate(n = as.factor(n),
