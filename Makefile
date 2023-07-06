@@ -21,8 +21,8 @@ chisq_plots = ./output/sims/chisq//ucsq_g_01.pdf \
               ./output/sims/chisq//ucsq_gl_rd100_12.pdf \
               ./output/sims/chisq//ucsq_gl_rd100_22.pdf
 
-pm_plots = ./output/sims/null_g_pmalpha_box.pdf \
-           ./output/sims/null_gl_pmalpha_box.pdf
+pm_plots = ./output/sims/pm/null_g_pmalpha_box.pdf \
+           ./output/sims/pm/null_gl_pmalpha_box.pdf
 
 blueplots = ./output/blue/bad_diff.pdf \
             ./output/blue/bad_snps.pdf \
@@ -85,4 +85,5 @@ $(chisq_plots) : ./code/chisq_plots.R $(simsout)
 $(pm_plots) : ./code/pm_plots.R $(simsout)
 	mkdir -p ./output/rout
 	mkdir -p ./output/sims
+	mkdir -p ./output/sims/pm
 	$(rexec) $< ./output/rout/$(basename $(notdir $<)).Rout

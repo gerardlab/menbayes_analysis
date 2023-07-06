@@ -30,7 +30,7 @@ ggplot(data = alpha_df, mapping = aes(x = n, y = pm_alpha, fill = `Parent Genoty
   theme_bw() +
   theme(strip.background = element_rect(fill = "white"))
 
-ggsave("./output/sims/null_g_pmalpha_box.pdf", plot = last_plot(), width = 6, height = 2, units = "in")
+ggsave("./output/sims/pm/null_g_pmalpha_box.pdf", plot = last_plot(), width = 6, height = 2, units = "in")
 
 #Null, genotype likelihoods
 
@@ -59,4 +59,4 @@ ggplot(data = alpha_df_gl, mapping = aes(x = n, y = pm_alpha, fill = `Parent Gen
   theme_bw() +
   theme(strip.background = element_rect(fill = "white"))
 
-ggsave("./output/sims/null_gl_pmalpha_box.pdf", plot = last_plot(), width = 6, height = 6, units = "in")
+ggsave("./output/sims/pm/null_gl_pmalpha_box.pdf", plot = last_plot(), width = 6, height = 6, units = "in")
