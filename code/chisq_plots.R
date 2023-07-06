@@ -25,7 +25,7 @@ null_g %>%
          p1 = as.factor(p1),
          p2 = as.factor(p2)) %>%
   filter(p1 == 0 & p2 == 1) %>%
-ggplot(aes(sample=chisq_pvalue, color = n)) +
+  ggplot(aes(sample=chisq_pvalue, color = n)) +
     geom_qq(size = 2, distribution = qunif) +
     geom_abline(slope = 1, intercept = 0) +
     facet_wrap(~alpha, labeller = label_parsed) +
@@ -35,7 +35,7 @@ ggplot(aes(sample=chisq_pvalue, color = n)) +
     theme_bw() +
     theme(strip.background = element_rect(fill = "white"))
 
-ggsave("ucsq_g_01.pdf", plot = last_plot(), width = 6, height = 4, units = "in", device = "pdf", path = "./output")
+ggsave("./output/sims/chisq/ucsq_g_01.pdf", plot = last_plot(), width = 6, height = 4, units = "in")
 
 null_g %>%
   mutate(n = as.factor(n),
@@ -56,7 +56,7 @@ null_g %>%
   theme_bw() +
   theme(strip.background = element_rect(fill = "white"))
 
-ggsave("ucsq_g_02.pdf", plot = last_plot(), width = 6, height = 6, units = "in", device = "pdf", path = "./output")
+ggsave("./output/sims/chisq/ucsq_g_02.pdf", plot = last_plot(), width = 6, height = 6, units = "in")
 
 null_g %>%
   filter(xi == 1/3) %>%
@@ -78,7 +78,7 @@ null_g %>%
   theme_bw() +
   theme(strip.background = element_rect(fill = "white"))
 
-ggsave("ucsq_g_11.pdf", plot = last_plot(), width = 6, height = 6, units = "in", device = "pdf", path = "./output")
+ggsave("./output/sims/chisq/ucsq_g_11.pdf", plot = last_plot(), width = 6, height = 6, units = "in")
 
 
 null_g %>%
@@ -100,7 +100,7 @@ null_g %>%
   theme_bw() +
   theme(strip.background = element_rect(fill = "white"))
 
-ggsave("ucsq_g_12.pdf", plot = last_plot(), width = 6, height = 6, units = "in", device = "pdf", path = "./output")
+ggsave("./output/sims/chisq/ucsq_g_12.pdf", plot = last_plot(), width = 6, height = 6, units = "in")
 
 null_g %>%
   mutate(n = as.factor(n),
@@ -121,7 +121,7 @@ null_g %>%
   theme_bw() +
   theme(strip.background = element_rect(fill = "white"))
 
-ggsave("ucsq_g_22", plot = last_plot(), width = 6, height = 6, units = "in", device = "pdf", path = "./output")
+ggsave("./output/sims/chisq/ucsq_g_22.pdf", plot = last_plot(), width = 6, height = 6, units = "in")
 
 #################################################
 ## Genotype Likelihoods - Uniform Chi Sq Plots ##
@@ -149,7 +149,7 @@ null_gl %>%
   theme_bw() +
   theme(strip.background = element_rect(fill = "white"))
 
-ggsave("ucsq_gl_rd10_01.pdf", plot = last_plot(), width = 6, height = 6, units = "in", device = "pdf", path = "./output")
+ggsave("./output/sims/chisq/ucsq_gl_rd10_01.pdf", plot = last_plot(), width = 6, height = 6, units = "in")
 
 #p1 = 0, p2 = 1, rd = 100
 null_gl %>%
@@ -173,7 +173,7 @@ null_gl %>%
   theme_bw() +
   theme(strip.background = element_rect(fill = "white"))
 
-ggsave("ucsq_gl_rd100_01.pdf", plot = last_plot(), width = 6, height = 6, units = "in", device = "pdf", path = "./output")
+ggsave("./output/sims/chisq/ucsq_gl_rd100_01.pdf", plot = last_plot(), width = 6, height = 6, units = "in")
 
 #p1 = 0, p2 = 2, rd = 10
 null_gl %>%
@@ -196,7 +196,7 @@ null_gl %>%
   theme_bw() +
   theme(strip.background = element_rect(fill = "white"))
 
-ggsave("ucsq_gl_rd10_02.pdf", plot = last_plot(), width = 6, height = 6, units = "in", device = "pdf", path = "./output")
+ggsave("./output/sims/chisq/ucsq_gl_rd10_02.pdf", plot = last_plot(), width = 6, height = 6, units = "in")
 
 #p1 = 0, p2 = 2, rd = 100
 null_gl %>%
@@ -219,7 +219,7 @@ null_gl %>%
   theme_bw() +
   theme(strip.background = element_rect(fill = "white"))
 
-ggsave("ucsq_gl_rd100_02.pdf", plot = last_plot(), width = 6, height = 6, units = "in", device = "pdf", path = "./output")
+ggsave("./output/sims/chisq/ucsq_gl_rd100_02.pdf", plot = last_plot(), width = 6, height = 6, units = "in")
 
 #p1 = 1, p2 = 1, rd = 10
 null_gl %>%
@@ -243,7 +243,7 @@ null_gl %>%
   theme_bw() +
   theme(strip.background = element_rect(fill = "white"))
 
-ggsave("ucsq_gl_rd10_11.pdf", plot = last_plot(), width = 6, height = 6, units = "in", device = "pdf", path = "./output")
+ggsave("./output/sims/chisq/ucsq_gl_rd10_11.pdf", plot = last_plot(), width = 6, height = 6, units = "in")
 
 #p1 = 1, p2 = 1, rd = 100
 null_gl %>%
@@ -267,7 +267,7 @@ null_gl %>%
   theme_bw() +
   theme(strip.background = element_rect(fill = "white"))
 
-ggsave("ucsq_gl_rd100_11.pdf", plot = last_plot(), width = 6, height = 6, units = "in", device = "pdf", path = "./output")
+ggsave("./output/sims/chisq/ucsq_gl_rd100_11.pdf", plot = last_plot(), width = 6, height = 6, units = "in")
 
 #p1 = 1, p2 = 2, rd = 10
 null_gl %>%
@@ -290,7 +290,7 @@ null_gl %>%
   theme_bw() +
   theme(strip.background = element_rect(fill = "white"))
 
-ggsave("ucsq_gl_rd10_12.pdf", plot = last_plot(), width = 6, height = 6, units = "in", device = "pdf", path = "./output")
+ggsave("./output/sims/chisq/ucsq_gl_rd10_12.pdf", plot = last_plot(), width = 6, height = 6, units = "in")
 
 #p1 = 1, p2 = 2, rd = 100
 null_gl %>%
@@ -313,7 +313,7 @@ null_gl %>%
   theme_bw() +
   theme(strip.background = element_rect(fill = "white"))
 
-ggsave("ucsq_gl_rd100_12.pdf", plot = last_plot(), width = 6, height = 6, units = "in", device = "pdf", path = "./output")
+ggsave("./output/sims/chisq/ucsq_gl_rd100_12.pdf", plot = last_plot(), width = 6, height = 6, units = "in")
 
 #p1 = 2, p2 = 2, rd = 10
 null_gl %>%
@@ -336,7 +336,7 @@ null_gl %>%
   theme_bw() +
   theme(strip.background = element_rect(fill = "white"))
 
-ggsave("ucsq_gl_rd10_22.pdf", plot = last_plot(), width = 6, height = 6, units = "in", device = "pdf", path = "./output")
+ggsave("./output/sims/chisq/ucsq_gl_rd10_22.pdf", plot = last_plot(), width = 6, height = 6, units = "in")
 
 #p1 = 2, p2 = 2, rd = 100
 null_gl %>%
@@ -359,4 +359,4 @@ null_gl %>%
   theme_bw() +
   theme(strip.background = element_rect(fill = "white"))
 
-ggsave("ucsq_gl_rd100_22.pdf", plot = last_plot(), width = 6, height = 6, units = "in", device = "pdf", path = "./output")
+ggsave("./output/sims/chisq/ucsq_gl_rd100_22.pdf", plot = last_plot(), width = 6, height = 6, units = "in")

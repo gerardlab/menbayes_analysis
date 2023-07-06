@@ -6,6 +6,21 @@ simsout = ./output/sims/null_sims_g.csv \
           ./output/sims/alt_sims_g.RDS \
           ./output/sims/alt_sims_gl.RDS
 
+chisq_plots = ./output/sims/chisq//ucsq_g_01.pdf \
+              ./output/sims/chisq//ucsq_g_02.pdf \
+              ./output/sims/chisq//ucsq_g_11.pdf \
+              ./output/sims/chisq//ucsq_g_12.pdf \
+              ./output/sims/chisq//ucsq_gl_rd10_01.pdf \
+              ./output/sims/chisq//ucsq_gl_rd10_02.pdf \
+              ./output/sims/chisq//ucsq_gl_rd10_11.pdf \
+              ./output/sims/chisq//ucsq_gl_rd10_12.pdf \
+              ./output/sims/chisq//ucsq_gl_rd10_22.pdf \
+              ./output/sims/chisq//ucsq_gl_rd100_01.pdf \
+              ./output/sims/chisq//ucsq_gl_rd100_02.pdf \
+              ./output/sims/chisq//ucsq_gl_rd100_11.pdf \
+              ./output/sims/chisq//ucsq_gl_rd100_12.pdf \
+              ./output/sims/chisq//ucsq_gl_rd100_22.pdf
+
 blueplots = ./output/blue/bad_diff.pdf \
             ./output/blue/bad_snps.pdf \
             ./output/blue/blue_logbf_hist.pdf \
@@ -36,7 +51,7 @@ $(blueplots) : ./code/blue_plots.R ./output/blue/blue_df.csv
 
 # Sims ----
 .PHONY : sims
-sims : $(simsout)
+sims : $(chisq_plots)
 
 ./output/sims/null_sims_g.csv : ./code/null_sims_g.R
 	mkdir -p ./output/rout
@@ -56,4 +71,10 @@ sims : $(simsout)
 ./output/sims/alt_sims_gl.RDS : ./code/alt_sims_gl.R
 	mkdir -p ./output/rout
 	mkdir -p ./output/sims
+	$(rexec) $< ./output/rout/$(basename $(notdir $<)).Rout
+
+$(chisq_plots) : ./code/chisq_plots.R $(simsout)
+	mkdir -p ./output/rout
+	mkdir -p ./output/sims
+	mkdir -p ./output/sims/chisq
 	$(rexec) $< ./output/rout/$(basename $(notdir $<)).Rout
