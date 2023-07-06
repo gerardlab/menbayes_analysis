@@ -30,7 +30,7 @@ ggplot(data = alpha_df, mapping = aes(x = n, y = pm_alpha, fill = `Parent Genoty
   theme_bw() +
   theme(strip.background = element_rect(fill = "white"))
 
-ggsave("null_g_pmalpha_box.pdf", plot = last_plot(), width = 6, height = 4, units = "in", device = "pdf", path = "./output")
+ggsave("./output/sims/null_g_pmalpha_box.pdf", plot = last_plot(), width = 6, height = 2, units = "in")
 
 #Null, genotype likelihoods
 
@@ -49,7 +49,6 @@ facet_df_gl <- alpha_df_gl %>%
   select(alpha_num, alpha, rd) %>%
   distinct()
 
-
 ggplot(data = alpha_df_gl, mapping = aes(x = n, y = pm_alpha, fill = `Parent Genotypes`)) +
   geom_boxplot() +
   geom_hline(data = facet_df_gl, mapping = aes(yintercept = alpha_num), linetype = "dashed") +
@@ -60,4 +59,4 @@ ggplot(data = alpha_df_gl, mapping = aes(x = n, y = pm_alpha, fill = `Parent Gen
   theme_bw() +
   theme(strip.background = element_rect(fill = "white"))
 
-ggsave("null_gl_pmalpha_box.pdf", plot = last_plot(), width = 6, height = 6, units = "in", device = "pdf", path = "./output")
+ggsave("./output/sims/null_gl_pmalpha_box.pdf", plot = last_plot(), width = 6, height = 6, units = "in")
