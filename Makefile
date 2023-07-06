@@ -24,6 +24,12 @@ chisq_plots = ./output/sims/chisq//ucsq_g_01.pdf \
 pm_plots = ./output/sims/pm/null_g_pmalpha_box.pdf \
            ./output/sims/pm/null_gl_pmalpha_box.pdf
 
+bf_plots = ./output/sims/bf/alt_g_boxplot.pdf \
+           ./output/sims/bf/alt_gl_boxplot.pdf \
+           ./output/sims/bf/null_g_boxplot.pdf \
+           ./output/sims/bf/null_gl_boxplot_rd10.pdf \
+           ./output/sims/bf/null_gl_boxplot_rd100.pdf
+
 blueplots = ./output/blue/bad_diff.pdf \
             ./output/blue/bad_snps.pdf \
             ./output/blue/blue_logbf_hist.pdf \
@@ -54,7 +60,7 @@ $(blueplots) : ./code/blue_plots.R ./output/blue/blue_df.csv
 
 # Sims ----
 .PHONY : sims
-sims : $(chisq_plots) $(pm_plots)
+sims : $(chisq_plots) $(pm_plots) $(bf_plots)
 
 ./output/sims/null_sims_g.csv : ./code/null_sims_g.R
 	mkdir -p ./output/rout
@@ -86,4 +92,10 @@ $(pm_plots) : ./code/pm_plots.R $(simsout)
 	mkdir -p ./output/rout
 	mkdir -p ./output/sims
 	mkdir -p ./output/sims/pm
+	$(rexec) $< ./output/rout/$(basename $(notdir $<)).Rout
+
+$(bf_plots) : ./code/sim_plots.R $(simsout)
+	mkdir -p ./output/rout
+	mkdir -p ./output/sims
+	mkdir -p ./output/sims/bf
 	$(rexec) $< ./output/rout/$(basename $(notdir $<)).Rout

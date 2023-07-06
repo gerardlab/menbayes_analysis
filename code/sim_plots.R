@@ -28,7 +28,7 @@ null_gl <- read.csv("./output/sims/null_sims_gl.csv")
     theme(strip.background = element_rect(fill = "white")) +
     geom_hline(yintercept = 0, lty = 2)
 
-  ggsave("alt_g_boxplot_62923.pdf", plot = last_plot(), width = 4, height = 2, units = "in", device = "pdf", path = "./output")
+  ggsave("./output/sims/bf/alt_g_boxplot.pdf", plot = last_plot(), width = 4, height = 2, units = "in")
 
 ## Genotype Likelihoods - Boxplot
 
@@ -49,7 +49,7 @@ null_gl <- read.csv("./output/sims/null_sims_gl.csv")
     theme(strip.background = element_rect(fill = "white")) +
     geom_hline(yintercept = 0, lty = 2)
 
-    ggsave("alt_gl_boxplot_6723.pdf", plot = last_plot(), width = 6, height = 3, units = "in", device = "pdf", path = "./output")
+    ggsave("./output/sims/bf/alt_gl_boxplot.pdf", plot = last_plot(), width = 6, height = 3, units = "in")
 
 ## Null Sims
 
@@ -70,7 +70,7 @@ null_gl <- read.csv("./output/sims/null_sims_gl.csv")
       theme(strip.background = element_rect(fill = "white")) +
       geom_hline(yintercept = 0, lty = 2)
 
-   ggsave("null_g_boxplot_62123.pdf", plot = last_plot(), width = 6, height = 4, units = "in", device = "pdf", path = "./output")
+   ggsave("./output/sims/bf/null_g_boxplot.pdf", plot = last_plot(), width = 6, height = 4, units = "in")
 
 
 ## Genotype Likelihoods - Boxplot
@@ -93,7 +93,7 @@ null_gl <- read.csv("./output/sims/null_sims_gl.csv")
       theme(strip.background = element_rect(fill = "white")) +
       geom_hline(yintercept = 0, lty = 2)
 
-ggsave("null_gl_boxplot_rd10.pdf", plot = last_plot(), width = 6, height = 6, units = "in", device = "pdf", path = "./output")
+ggsave("./output/sims/bf/null_gl_boxplot_rd10.pdf", plot = last_plot(), width = 6, height = 6, units = "in")
 
 #RD = 100
    null_gl %>%
@@ -113,4 +113,4 @@ ggsave("null_gl_boxplot_rd10.pdf", plot = last_plot(), width = 6, height = 6, un
      theme(strip.background = element_rect(fill = "white")) +
      geom_hline(yintercept = 0, lty = 2)
 
-   ggsave("null_gl_boxplot_rd100.pdf", plot = last_plot(), width = 6, height = 6, units = "in", device = "pdf", path = "./output")
+   ggsave("./output/sims/bf/null_gl_boxplot_rd100.pdf", plot = last_plot(), width = 6, height = 6, units = "in")
