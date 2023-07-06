@@ -28,7 +28,7 @@ ggplot(data = alt_g, mapping = aes(x = n, y = logbf, col = genofreq)) +
     theme(strip.background = element_rect(fill = "white")) +
     geom_hline(yintercept = 0, lty = 2)
 
-ggsave("./output/sims/bf/alt_g_boxplot.pdf", plot = last_plot(), width = 4, height = 2, units = "in")
+ggsave("./output/sims/bf/alt_g_boxplot.pdf", plot = last_plot(), width = 5, height = 2.5, units = "in")
 
 ## Genotype Likelihoods - Boxplot
 
@@ -53,13 +53,20 @@ ggsave("./output/sims/bf/alt_gl_boxplot.pdf", plot = last_plot(), width = 6, hei
 
 ## Null Sims
 
+null_g %>%
+  select(xi) %>%
+  distinct() %>%
+  mutate(xi = paste0("xi==", as.character(MASS::fractions(xi)))) %>%
+  unlist() ->
+  xivec
+
 ## Genotypes Known - Boxplot
 null_g %>%
     mutate(n = as.factor(n),
            `Parent Genotypes` = paste0("(", p1, ",", p2, ")"),
            alpha = paste0("alpha==", as.character(MASS::fractions(alpha))),
            xi = paste0("xi==", as.character(MASS::fractions(xi))),
-           xi = parse_factor(xi)) %>%
+           xi = parse_factor(xi, levels = xivec)) %>%
     ggplot(mapping = aes(x = n, y = logbf, color = `Parent Genotypes`)) +
     geom_boxplot() +
     facet_grid(alpha ~ xi, labeller = label_parsed) +
@@ -70,8 +77,7 @@ null_g %>%
     theme(strip.background = element_rect(fill = "white")) +
     geom_hline(yintercept = 0, lty = 2)
 
-ggsave("./output/sims/bf/null_g_boxplot.pdf", plot = last_plot(), width = 6, height = 4, units = "in")
-
+ggsave("./output/sims/bf/null_g_boxplot.pdf", plot = last_plot(), width = 6, height = 5, units = "in")
 
 ## Genotype Likelihoods - Boxplot
 
@@ -82,7 +88,7 @@ null_gl %>%
            `Parent Genotypes` = paste0("(", p1, ",", p2, ")"),
            alpha = paste0("alpha==", as.character(MASS::fractions(alpha))),
            xi = paste0("xi==", as.character(MASS::fractions(xi))),
-           xi = parse_factor(xi)) %>%
+           xi = parse_factor(xi, levels = xivec)) %>%
     ggplot(mapping = aes(x = n, y = logbf, color = `Parent Genotypes`)) +
     geom_boxplot() +
     facet_grid(alpha ~ xi, labeller = label_parsed) +
@@ -93,7 +99,7 @@ null_gl %>%
     theme(strip.background = element_rect(fill = "white")) +
     geom_hline(yintercept = 0, lty = 2)
 
-ggsave("./output/sims/bf/null_gl_boxplot_rd10.pdf", plot = last_plot(), width = 6, height = 6, units = "in")
+ggsave("./output/sims/bf/null_gl_boxplot_rd10.pdf", plot = last_plot(), width = 6, height = 5, units = "in")
 
 ## RD = 100
 null_gl %>%
@@ -102,7 +108,7 @@ null_gl %>%
            `Parent Genotypes` = paste0("(", p1, ",", p2, ")"),
            alpha = paste0("alpha==", as.character(MASS::fractions(alpha))),
            xi = paste0("xi==", as.character(MASS::fractions(xi))),
-           xi = parse_factor(xi)) %>%
+           xi = parse_factor(xi, levels = xivec)) %>%
     ggplot(mapping = aes(x = n, y = logbf, color = `Parent Genotypes`)) +
     geom_boxplot() +
     facet_grid(alpha ~ xi, labeller = label_parsed) +
@@ -113,4 +119,4 @@ null_gl %>%
     theme(strip.background = element_rect(fill = "white")) +
     geom_hline(yintercept = 0, lty = 2)
 
-ggsave("./output/sims/bf/null_gl_boxplot_rd100.pdf", plot = last_plot(), width = 6, height = 6, units = "in")
+ggsave("./output/sims/bf/null_gl_boxplot_rd100.pdf", plot = last_plot(), width = 6, height = 5, units = "in")

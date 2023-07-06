@@ -98,7 +98,7 @@ blue_sub <- filter_snp(x = bluefits, expr = snp %in% dist_df$snp[[5]]) # only ke
 pl5 <- plot(blue_sub, indices = 1)[[1]] +
   theme(legend.position="none")
 
-pdf(file = "./output/blue/bad_snps.pdf", width = 6, height = 7, family = "Times")
+pdf(file = "./output/blue/bad_snps.pdf", width = 5.5, height = 6, family = "Times")
 grid.arrange(pl1, pl2, pl3, pl4, pl5, lg, ncol = 2)
 dev.off()
 
@@ -131,7 +131,7 @@ p4 <- plot(lbfp_sub, indices = 4)[[1]] +
 p5 <- plot(lbfp_sub, indices = 5)[[1]] +
   theme(legend.position="none")
 
-pdf(file = "./output/blue/bad_diff.pdf", width = 6, height = 7, family = "Times")
+pdf(file = "./output/blue/bad_diff.pdf", width = 5.5, height = 6, family = "Times")
 grid.arrange(p1, p2, p3, p4, p5, lg, ncol = 2)
 dev.off()
 
