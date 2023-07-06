@@ -1,23 +1,14 @@
-## Libraries
-
-  #library(menbayes)
-  library(tidyverse)
-  #devtools::install_github("thakkar-mira/girlboss")
-  library(girlboss)
-
-## Load Data
-
-  alt_g <- readRDS("./output/sims/alt_sims_g.RDS")
-
-  alt_gl <- readRDS("./output/sims/alt_sims_gl.RDS")
-
-  null_g <- read.csv("./output/sims/null_sims_g.csv")
-
-  null_gl <- read.csv("./output/sims/null_sims_gl.csv")
+library(tidyverse)
+#devtools::install_github("thakkar-mira/girlboss")
+library(girlboss)
+alt_g <- readRDS("./output/sims/alt_sims_g.RDS")
+alt_gl <- readRDS("./output/sims/alt_sims_gl.RDS")
+null_g <- read.csv("./output/sims/null_sims_g.csv")
+null_gl <- read.csv("./output/sims/null_sims_gl.csv")
 
 ## Alternative Sims
 
-    ## Genotypes Known - Boxplot
+## Genotypes Known - Boxplot
 
   alt_g <- alt_g %>%
     mutate(n = as.factor(n),
@@ -28,18 +19,18 @@
   alt_g$genofreq <- recode_factor(alt_g$genofreq, "c(0.2, 0.2, 0.2, 0.2, 0.2)" = "(0.2, 0.2, 0.2, 0.2, 0.2)",
                                   "c(0.4, 0.1, 0, 0.1, 0.4)" = "(0.4, 0.1, 0, 0.1, 0.4)")
 
-  ggplot(data = alt_g, mapping = aes(x = n, y = logbf)) +
+  ggplot(data = alt_g, mapping = aes(x = n, y = logbf, col = genofreq)) +
     geom_boxplot() +
-    facet_wrap(~genofreq, scales = "free") +
     xlab("Sample Size") +
     ylab("Log Bayes Factor") +
+    scale_color_manual(values = girlboss_palette("elf_bar"), name = "Genotype\nFrequency") +
     theme_bw() +
     theme(strip.background = element_rect(fill = "white")) +
     geom_hline(yintercept = 0, lty = 2)
 
-  ggsave("alt_g_boxplot_6723.pdf", plot = last_plot(), width = 6, height = 4, units = "in", device = "pdf", path = "./output")
+  ggsave("alt_g_boxplot_62923.pdf", plot = last_plot(), width = 4, height = 2, units = "in", device = "pdf", path = "./output")
 
-    ## Genotype Likelihoods - Boxplot
+## Genotype Likelihoods - Boxplot
 
   alt_gl <- alt_gl %>%
     mutate(n = as.factor(n),
@@ -62,7 +53,7 @@
 
 ## Null Sims
 
-    ## Genotypes Known - Boxplot
+## Genotypes Known - Boxplot
     null_g %>%
       mutate(n = as.factor(n),
              `Parent Genotypes` = paste0("(", p1, ",", p2, ")"),
@@ -82,9 +73,9 @@
    ggsave("null_g_boxplot_62123.pdf", plot = last_plot(), width = 6, height = 4, units = "in", device = "pdf", path = "./output")
 
 
-    ## Genotype Likelihoods - Boxplot
+## Genotype Likelihoods - Boxplot
 
-    #RD = 10
+#RD = 10
    null_gl %>%
      filter(rd == 10) %>%
       mutate(n = as.factor(n),
@@ -102,9 +93,9 @@
       theme(strip.background = element_rect(fill = "white")) +
       geom_hline(yintercept = 0, lty = 2)
 
-   ggsave("null_gl_boxplot_rd10_62123.pdf", plot = last_plot(), width = 6, height = 6, units = "in", device = "pdf", path = "./output")
+ggsave("null_gl_boxplot_rd10.pdf", plot = last_plot(), width = 6, height = 6, units = "in", device = "pdf", path = "./output")
 
-   #RD = 100
+#RD = 100
    null_gl %>%
      filter(rd == 100) %>%
      mutate(n = as.factor(n),
@@ -121,3 +112,5 @@
      theme_bw() +
      theme(strip.background = element_rect(fill = "white")) +
      geom_hline(yintercept = 0, lty = 2)
+
+   ggsave("null_gl_boxplot_rd100.pdf", plot = last_plot(), width = 6, height = 6, units = "in", device = "pdf", path = "./output")

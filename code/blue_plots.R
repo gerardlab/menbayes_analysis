@@ -35,7 +35,7 @@ blue_df %>%
   theme(strip.background = element_rect(fill = "white")) +
   geom_vline(xintercept = 0, lty = 2)
 
-ggsave("./output/blue/blue_logbf_hist.pdf", plot = last_plot(), width = 4, height = 3, units = "in")
+ggsave("blue_logbf_hist.pdf", plot = last_plot(), width = 4, height = 3, units = "in", path = "./output")
 
 ##########################################################
 ## How does the chi-squared test comparatively perform? ##
@@ -53,7 +53,7 @@ blue_df %>%
   theme_bw() +
   theme(strip.background = element_rect(fill = "white"))
 
-ggsave("./output/blue/blue_qq.pdf", plot = last_plot(), width = 4, height = 4, units = "in")
+ggsave("blue_qq.pdf", plot = last_plot(), width = 3, height = 3, units = "in", path = "./output")
 
 ######################################################################
 ## What about the SNPs that seem to suggest segregation distortion? ##
@@ -158,4 +158,4 @@ ggplot(data = blue_2, mapping = aes(x = snp, y = pm_alpha)) +
   theme_bw() +
   theme(strip.background = element_rect(fill = "white"))
 
-ggsave("./output/blue/chr_dr_scatter.pdf", plot = last_plot(), width = 4, height = 4, units = "in")
+ggsave("chr_dr_scatter.pdf", plot = last_plot(), width = 3, height = 3, units = "in", path = "./output")
