@@ -1,4 +1,4 @@
-# Code and Analysis for the master's thesis "Bayesian Tests for Segregation Distortion in Experimental Tetraploid Populations" by Mira Thakkar, Advised by David Gerard
+# Code and Analysis for the Master's Thesis "Bayesian Tests for Segregation Distortion in Experimental Tetraploid Populations" by Mira Thakkar, Advised by David Gerard
 
 [![NSF-2132247](https://img.shields.io/badge/NSF-2132247-blue.svg)](https://nsf.gov/awardsearch/showAward?AWD_ID=2132247)
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.8124372.svg)](https://doi.org/10.5281/zenodo.8124372)
